@@ -6,8 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static com.halas.drivers.WebDriverWaitManager.getWebDriverWait;
-
 public class GmailHomePage extends CommonPage {
     @FindBy(css = "header a[href$='mail.google.com/mail&service=mail'][aria-label*='Google:'][role='button']")
     private WebElement accountCircle;
@@ -23,18 +21,18 @@ public class GmailHomePage extends CommonPage {
     }
 
     public void clickOnWriteSomeoneButton() {
-        getWebDriverWait().until(ExpectedConditions.elementToBeClickable(writeSomeoneButton));
+        driverWait.until(ExpectedConditions.elementToBeClickable(writeSomeoneButton));
         writeSomeoneButton.click();
     }
 
     public void clickOnPreviouslySavedMessages() {
-        getWebDriverWait().ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(prevoiusSavedMessage));
+        driverWait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(prevoiusSavedMessage));
         prevoiusSavedMessage.click();
     }
 
     public void clickOnLastSavedMessage() {
-        getWebDriverWait().until(ExpectedConditions.urlContains("drafts"));
-        getWebDriverWait().until(ExpectedConditions.elementToBeClickable(lastSavedMessage));
+        driverWait.until(ExpectedConditions.urlContains("drafts"));
+        driverWait.until(ExpectedConditions.elementToBeClickable(lastSavedMessage));
         lastSavedMessage.click();
     }
 }

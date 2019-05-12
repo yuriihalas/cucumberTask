@@ -6,9 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static com.halas.drivers.WebDriverManager.getWebDriver;
-import static com.halas.drivers.WebDriverWaitManager.getWebDriverWait;
-
 public class GmailFormSendMessage extends CommonPage {
     @FindBy(css = "*[name='to']")
     private WebElement fieldWhichEmailsSend;
@@ -37,7 +34,7 @@ public class GmailFormSendMessage extends CommonPage {
             String emailsHiddenCopyReceive,
             String theme,
             String message) {
-        getWebDriverWait().until(ExpectedConditions.visibilityOf(fieldWhichEmailsSend));
+        driverWait.until(ExpectedConditions.visibilityOf(fieldWhichEmailsSend));
         fieldWhichEmailsSend.click();
         buttonEmailsCopy.click();
         buttonEmailsHiddenCopy.click();
@@ -53,14 +50,14 @@ public class GmailFormSendMessage extends CommonPage {
     }
 
     public void clickOnShowHiddenCopyAndCopyMails() {
-        getWebDriverWait().until(webDriver -> {
+        driverWait.until(webDriver -> {
             areaHiddenCopyAndCopyEmailsSend.click();
             return true;
         });
     }
 
     public void clickOnSendMessage() {
-        getWebDriverWait().until(ExpectedConditions.elementToBeClickable(sendMessage));
+        driverWait.until(ExpectedConditions.elementToBeClickable(sendMessage));
         sendMessage.click();
     }
 
@@ -77,7 +74,7 @@ public class GmailFormSendMessage extends CommonPage {
     }
 
     public String getTextFieldThemeSend() {
-        return getWebDriver().findElement(
+        return driver.findElement(
                 By.cssSelector("form[enctype='multipart/form-data'] [name='subject']"))
                 .getAttribute("value");
     }
@@ -87,7 +84,7 @@ public class GmailFormSendMessage extends CommonPage {
     }
 
     public void waitUntilMessageSendingWasEnd() {
-        getWebDriverWait().until(ExpectedConditions.not(ExpectedConditions.invisibilityOfElementWithText(
+        driverWait.until(ExpectedConditions.not(ExpectedConditions.invisibilityOfElementWithText(
                 By.cssSelector("[role='alert']>div>div:nth-child(2)>span:first-child>*:first-child"),
                 "Надсилання…")));
     }

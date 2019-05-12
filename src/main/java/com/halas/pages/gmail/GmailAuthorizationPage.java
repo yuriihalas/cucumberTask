@@ -5,8 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static com.halas.drivers.WebDriverWaitManager.getWebDriverWait;
-
 public class GmailAuthorizationPage extends CommonPage {
     @FindBy(id = "identifierId")
     private WebElement loginField;
@@ -23,7 +21,7 @@ public class GmailAuthorizationPage extends CommonPage {
     }
 
     public void fillPasswordAreaAndClickNext(String password) {
-        getWebDriverWait().until(ExpectedConditions.visibilityOf(passwordField));
+        driverWait.until(ExpectedConditions.visibilityOf(passwordField));
         passwordField.sendKeys(password);
         nextButtonPassword.click();
     }
