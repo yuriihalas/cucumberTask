@@ -12,6 +12,7 @@ public abstract class CommonPage {
     protected WebDriverWait driverWait;
 
     public CommonPage() {
+        initElements();
     }
 
     private void initElements(){
