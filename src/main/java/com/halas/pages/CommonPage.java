@@ -5,7 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.halas.drivers.WebDriverManager.getWebDriver;
-import static com.halas.drivers.WebDriverWaitManager.getWebDriverWait;
+import static com.halas.property.HandleProperty.getValueProperty;
 
 public abstract class CommonPage {
     protected WebDriver driver;
@@ -16,8 +16,8 @@ public abstract class CommonPage {
     }
 
     private void initElements() {
-        PageFactory.initElements(getWebDriver(), this);
         driver = getWebDriver();
-        driverWait = getWebDriverWait();
+        driverWait = new WebDriverWait(driver, Integer.valueOf(getValueProperty("explicit-wait-time")));
+        PageFactory.initElements(driver, this);
     }
 }

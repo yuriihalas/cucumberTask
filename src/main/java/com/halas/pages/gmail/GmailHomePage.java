@@ -28,10 +28,10 @@ public class GmailHomePage extends CommonPage {
     public void clickOnPreviouslySavedMessages() {
         driverWait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(prevoiusSavedMessage));
         prevoiusSavedMessage.click();
+        driverWait.until(ExpectedConditions.attributeToBe(prevoiusSavedMessage, "tabindex", "0"));
     }
 
     public void clickOnLastSavedMessage() {
-        driverWait.until(ExpectedConditions.urlContains("drafts"));
         driverWait.until(ExpectedConditions.elementToBeClickable(lastSavedMessage));
         lastSavedMessage.click();
     }

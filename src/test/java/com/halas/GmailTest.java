@@ -1,5 +1,6 @@
 package com.halas;
 
+import com.halas.drivers.WebDriverManager;
 import com.halas.pages.gmail.GmailAuthorizationPage;
 import com.halas.pages.gmail.GmailFormSendMessage;
 import com.halas.pages.gmail.GmailHomePage;
@@ -12,23 +13,19 @@ import org.testng.annotations.*;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import static com.halas.drivers.WebDriverManager.getWebDriver;
-import static com.halas.drivers.helper.SetNullDrivers.setNullOnAllDrivers;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class GmailTest {
     private static final Logger LOG = LogManager.getLogger(GmailTest.class);
     private static final String BASE_URL_PAGE = JsonParser.getBaseUrl();
-    private static final String USER_LOGIN = JsonParser.getUserLogin();
-    private static final String USER_PASSWORD = JsonParser.getUserPassword();
     private static final String EMAIL_SEND = JsonParser.getWhoReceiveMessage();
     private static final String EMAIL_COPY_SEND = JsonParser.getWhoReceiveCopyMessage();
     private static final String EMAIL_HIDDEN_COPY_SEND = JsonParser.getWhoReceiveHiddenCopyMessage();
     private static final String THEME_SEND = JsonParser.getThemeMessage();
     private static final String MESSAGE_SEND = JsonParser.getMessage();
 
-    @DataProvider
+    @DataProvider(parallel = true)
     public Iterator<Object[]> usersLoginPassword() {
         return Stream.of(
                 new Object[]{"paprika0020@gmail.com", "423489123789op"},
@@ -40,7 +37,7 @@ public class GmailTest {
 
     @BeforeMethod
     void initUrlAndPages() {
-        getWebDriver().get(BASE_URL_PAGE);
+        WebDriverManager.getWebDriver().get(BASE_URL_PAGE);
     }
 
     @Test(dataProvider = "usersLoginPassword")
@@ -53,7 +50,7 @@ public class GmailTest {
         authorizationPage.fillPasswordAreaAndClickNext(userPassword);
         WebElement accountCircle = gmailHomePage.getAccountCircle();
         assertTrue(accountCircle.getAttribute("aria-label").contains(userLogin));
-        LOG.info("Title page: " + getWebDriver().getTitle());
+        LOG.info("Title page: " + WebDriverManager.getWebDriver().getTitle());
         //click on write someone button will open mailFormSendMessage
         gmailHomePage.clickOnWriteSomeoneButton();
         gmailFormSendMessage.fillFormSend(EMAIL_SEND, EMAIL_COPY_SEND, EMAIL_HIDDEN_COPY_SEND, THEME_SEND, MESSAGE_SEND);
@@ -69,10 +66,15 @@ public class GmailTest {
         String actualMessageSend = gmailFormSendMessage.getTextFieldMessageSend();
         //assert actual and expected results
         assertEquals(actualEmailSend, EMAIL_SEND);
+        LOG.info("Email FINE.");
         assertEquals(actualEmailCopySend, EMAIL_COPY_SEND);
+        LOG.info("Email copy FINE.");
         assertEquals(actualEmailHiddenCopySend, EMAIL_HIDDEN_COPY_SEND);
+        LOG.info("Email hidden copy FINE.");
         assertEquals(actualThemeSend, THEME_SEND);
+        LOG.info("Message subject FINE.");
         assertEquals(actualMessageSend, MESSAGE_SEND);
+        LOG.info("Message FINE.");
         //send message
         gmailFormSendMessage.clickOnSendMessage();
         gmailFormSendMessage.waitUntilMessageSendingWasEnd();
@@ -80,7 +82,6 @@ public class GmailTest {
 
     @AfterMethod
     void closeResources() {
-        getWebDriver().quit();
-        setNullOnAllDrivers();
+        WebDriverManager.shutdown();
     }
 }

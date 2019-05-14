@@ -6,10 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.regex.Pattern;
-
 public class GmailFormSendMessage extends CommonPage {
-    @FindBy(css = "*[name='to']")
+    @FindBy(css = "form[enctype='multipart/form-data'] textarea[name='to']")
     private WebElement fieldWhichEmailsSend;
     @FindBy(css = "[aria-label*='Ctrl'][aria-label*='Shift'][aria-label*='C'][role='link']")
     private WebElement buttonEmailsCopy;
@@ -27,7 +25,7 @@ public class GmailFormSendMessage extends CommonPage {
     private WebElement buttonSaveAndCloseFormMessage;
     @FindBy(css = "div[role='button'][data-tooltip*='Ctrl'][data-tooltip*='Enter']")
     private WebElement sendMessage;
-    @FindBy(css = "form[enctype='multipart/form-data']>*:nth-child(2)>*:first-child>*:nth-child(2)")
+    @FindBy(css = "form[enctype='multipart/form-data']>div:nth-child(2)")
     private WebElement areaHiddenCopyAndCopyEmailsSend;
 
     public void fillFormSend(
@@ -36,8 +34,7 @@ public class GmailFormSendMessage extends CommonPage {
             String emailsHiddenCopyReceive,
             String theme,
             String message) {
-        driverWait.until(ExpectedConditions.visibilityOf(fieldWhichEmailsSend));
-        fieldWhichEmailsSend.click();
+        driverWait.until(ExpectedConditions.visibilityOf(buttonEmailsCopy));
         buttonEmailsCopy.click();
         buttonEmailsHiddenCopy.click();
         fieldWhichEmailsSend.sendKeys(emailsReceive);
@@ -59,12 +56,12 @@ public class GmailFormSendMessage extends CommonPage {
     }
 
     public void clickOnSendMessage() {
-        driverWait.until(ExpectedConditions.elementToBeClickable(sendMessage));
         sendMessage.click();
     }
 
     public String getTextFieldWhichEmailsSend() {
-        return fieldWhichEmailsSend.getAttribute("value");
+        return driver.findElement(By.cssSelector("form[enctype='multipart/form-data'] input[name='to']"))
+                .getAttribute("value");
     }
 
     public String getTextFieldEmailsCopySend() {
@@ -86,9 +83,7 @@ public class GmailFormSendMessage extends CommonPage {
     }
 
     public void waitUntilMessageSendingWasEnd() {
-        driverWait.until(ExpectedConditions.not(
-                ExpectedConditions.textMatches(
-                        By.cssSelector("[role='alert']>div>div:nth-child(2)>span:first-child>*:first-child"),
-                        Pattern.compile("^[.]+...$"))));
+        driverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(
+                "[role='alert'] [role='link'][id='link_undo']")));
     }
 }

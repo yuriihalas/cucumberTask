@@ -10,7 +10,7 @@ public class GmailAuthorizationPage extends CommonPage {
     private WebElement loginField;
     @FindBy(id = "identifierNext")
     private WebElement nextButtonLogin;
-    @FindBy(css = "input[type='password']")
+    @FindBy(css = "input[name='password']")
     private WebElement passwordField;
     @FindBy(id = "passwordNext")
     private WebElement nextButtonPassword;
