@@ -19,7 +19,11 @@ public class WebDriverWaitManager {
         return driverWait;
     }
 
+    public static void setNullWebDriverWait() {
+        driverWait = null;
+    }
+
     private static void createWebDriverWait() {
-        driverWait = new WebDriverWait(getWebDriver(), 50);
+        driverWait = new WebDriverWait(getWebDriver(), 30);
     }
 }

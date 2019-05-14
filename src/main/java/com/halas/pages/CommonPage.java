@@ -15,7 +15,7 @@ public abstract class CommonPage {
         initElements();
     }
 
-    private void initElements(){
+    private void initElements() {
         PageFactory.initElements(getWebDriver(), this);
         driver = getWebDriver();
         driverWait = getWebDriverWait();

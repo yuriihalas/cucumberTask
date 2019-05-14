@@ -6,14 +6,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.regex.Pattern;
+
 public class GmailFormSendMessage extends CommonPage {
     @FindBy(css = "*[name='to']")
     private WebElement fieldWhichEmailsSend;
-    @FindBy(css = "[aria-label*='Ctrl –Shift –C']")
+    @FindBy(css = "[aria-label*='Ctrl'][aria-label*='Shift'][aria-label*='C'][role='link']")
     private WebElement buttonEmailsCopy;
     @FindBy(name = "cc")
     private WebElement fieldEmailsCopySend;
-    @FindBy(css = "[aria-label*='Ctrl –Shift –B']")
+    @FindBy(css = "[aria-label*='Ctrl'][aria-label*='Shift'][aria-label*='B'][role='link']")
     private WebElement buttonEmailsHiddenCopy;
     @FindBy(name = "bcc")
     private WebElement fieldEmailsHiddenCopySend;
@@ -23,7 +25,7 @@ public class GmailFormSendMessage extends CommonPage {
     private WebElement fieldMessageSend;
     @FindBy(css = "*[class='Ha'][src='images/cleardot.gif']")
     private WebElement buttonSaveAndCloseFormMessage;
-    @FindBy(css = "div[role='button'][data-tooltip*='(Ctrl –Enter)']")
+    @FindBy(css = "div[role='button'][data-tooltip*='Ctrl'][data-tooltip*='Enter']")
     private WebElement sendMessage;
     @FindBy(css = "form[enctype='multipart/form-data']>*:nth-child(2)>*:first-child>*:nth-child(2)")
     private WebElement areaHiddenCopyAndCopyEmailsSend;
@@ -84,8 +86,9 @@ public class GmailFormSendMessage extends CommonPage {
     }
 
     public void waitUntilMessageSendingWasEnd() {
-        driverWait.until(ExpectedConditions.not(ExpectedConditions.invisibilityOfElementWithText(
-                By.cssSelector("[role='alert']>div>div:nth-child(2)>span:first-child>*:first-child"),
-                "Надсилання…")));
+        driverWait.until(ExpectedConditions.not(
+                ExpectedConditions.textMatches(
+                        By.cssSelector("[role='alert']>div>div:nth-child(2)>span:first-child>*:first-child"),
+                        Pattern.compile("^[.]+...$"))));
     }
 }

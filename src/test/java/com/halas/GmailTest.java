@@ -7,11 +7,13 @@ import com.halas.parsers.JsonParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+import java.util.Iterator;
+import java.util.stream.Stream;
 
 import static com.halas.drivers.WebDriverManager.getWebDriver;
+import static com.halas.drivers.helper.SetNullDrivers.setNullOnAllDrivers;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -26,25 +28,31 @@ public class GmailTest {
     private static final String THEME_SEND = JsonParser.getThemeMessage();
     private static final String MESSAGE_SEND = JsonParser.getMessage();
 
-    private GmailAuthorizationPage authorizationPage;
-    private GmailHomePage gmailHomePage;
-    private GmailFormSendMessage gmailFormSendMessage;
-
-    @BeforeClass
-    void initUrlAndPages() {
-        getWebDriver().get(BASE_URL_PAGE);
-        authorizationPage = new GmailAuthorizationPage();
-        gmailHomePage = new GmailHomePage();
-        gmailFormSendMessage = new GmailFormSendMessage();
+    @DataProvider
+    public Iterator<Object[]> usersLoginPassword() {
+        return Stream.of(
+                new Object[]{"paprika0020@gmail.com", "423489123789op"},
+                new Object[]{"paprika0019@gmail.com", "423489123789op"},
+                new Object[]{"paprika0018@gmail.com", "423489123789op"},
+                new Object[]{"paprika0017@gmail.com", "423489123789op"},
+                new Object[]{"paprika0015@gmail.com", "423489123789op"}).iterator();
     }
 
-    @Test
-    void openMailAndAuthorization() {
+    @BeforeMethod
+    void initUrlAndPages() {
+        getWebDriver().get(BASE_URL_PAGE);
+    }
+
+    @Test(dataProvider = "usersLoginPassword")
+    void testSingInAndGoToSavedMessageAndCheckCorrectAndSendMess(String userLogin, String userPassword) {
+        GmailAuthorizationPage authorizationPage = new GmailAuthorizationPage();
+        GmailHomePage gmailHomePage = new GmailHomePage();
+        GmailFormSendMessage gmailFormSendMessage = new GmailFormSendMessage();
         //authorization block
-        authorizationPage.fillLoginAreaAndClickNext(USER_LOGIN);
-        authorizationPage.fillPasswordAreaAndClickNext(USER_PASSWORD);
+        authorizationPage.fillLoginAreaAndClickNext(userLogin);
+        authorizationPage.fillPasswordAreaAndClickNext(userPassword);
         WebElement accountCircle = gmailHomePage.getAccountCircle();
-        assertTrue(accountCircle.getAttribute("aria-label").contains(USER_LOGIN));
+        assertTrue(accountCircle.getAttribute("aria-label").contains(userLogin));
         LOG.info("Title page: " + getWebDriver().getTitle());
         //click on write someone button will open mailFormSendMessage
         gmailHomePage.clickOnWriteSomeoneButton();
@@ -70,8 +78,9 @@ public class GmailTest {
         gmailFormSendMessage.waitUntilMessageSendingWasEnd();
     }
 
-    @AfterClass
+    @AfterMethod
     void closeResources() {
         getWebDriver().quit();
+        setNullOnAllDrivers();
     }
 }
