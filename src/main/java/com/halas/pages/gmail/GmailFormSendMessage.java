@@ -28,28 +28,12 @@ public class GmailFormSendMessage extends CommonPage {
     @FindBy(css = "form[enctype='multipart/form-data']>div:nth-child(2)")
     private WebElement areaHiddenCopyAndCopyEmailsSend;
 
-    public void fillFormSend(
-            String emailsReceive,
-            String emailsCopyReceive,
-            String emailsHiddenCopyReceive,
-            String theme,
-            String message) {
-        driverWait.until(ExpectedConditions.visibilityOf(buttonEmailsCopy));
-        buttonEmailsCopy.click();
-        buttonEmailsHiddenCopy.click();
-        fieldWhichEmailsSend.sendKeys(emailsReceive);
-        fieldEmailsCopySend.sendKeys(emailsCopyReceive);
-        fieldEmailsHiddenCopySend.sendKeys(emailsHiddenCopyReceive);
-        fieldThemeSend.sendKeys(theme);
-        fieldMessageSend.sendKeys(message);
-    }
-
-    public void clickOnEmailsCopy() {
+    public void clickOnCC() {
         driverWait.until(ExpectedConditions.visibilityOf(buttonEmailsCopy));
         buttonEmailsCopy.click();
     }
 
-    public void clickOnEmailsHiddenCopy() {
+    public void clickOnBCC() {
         buttonEmailsHiddenCopy.click();
     }
 
@@ -57,15 +41,15 @@ public class GmailFormSendMessage extends CommonPage {
         fieldWhichEmailsSend.sendKeys(emailsReceive);
     }
 
-    public void fillEmailCopyField(String emailsCopyReceive) {
+    public void fillCCField(String emailsCopyReceive) {
         fieldEmailsCopySend.sendKeys(emailsCopyReceive);
     }
 
-    public void fillEmailHiddenCopyField(String emailsHiddenCopyReceive) {
+    public void fillBCCField(String emailsHiddenCopyReceive) {
         fieldEmailsHiddenCopySend.sendKeys(emailsHiddenCopyReceive);
     }
 
-    public void fillThemeField(String theme) {
+    public void fillSubjectField(String theme) {
         fieldThemeSend.sendKeys(theme);
     }
 
@@ -77,7 +61,7 @@ public class GmailFormSendMessage extends CommonPage {
         buttonSaveAndCloseFormMessage.click();
     }
 
-    public void clickOnShowHiddenCopyAndCopyMails() {
+    public void clickOnShowEmailsFields() {
         driverWait.until(webDriver -> {
             areaHiddenCopyAndCopyEmailsSend.click();
             return true;

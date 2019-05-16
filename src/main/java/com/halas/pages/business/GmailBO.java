@@ -1,11 +1,10 @@
 package com.halas.pages.business;
 
+import com.halas.models.Message;
 import com.halas.pages.gmail.GmailAuthorizationPage;
 import com.halas.pages.gmail.GmailFormSendMessage;
 import com.halas.pages.gmail.GmailHomePage;
-
-import static com.halas.parsers.JsonParser.getWhoReceiveMessage;
-import static org.junit.Assert.assertEquals;
+import org.openqa.selenium.WebElement;
 
 public class GmailBO {
     private GmailAuthorizationPage authorizationPage;
@@ -23,29 +22,36 @@ public class GmailBO {
         authorizationPage.fillPasswordAreaAndClickNext(password);
     }
 
-    public void createDraftMessage(
-            String emailsReceive,
-            String emailsCopyReceive,
-            String emailsHiddenCopyReceive,
-            String theme,
-            String message) {
+    public boolean checkSuccessAuthorisation(String userLogin) {
+        WebElement accountCircle = gmailHomePage.getAccountCircle();
+        return accountCircle.getAttribute("aria-label").contains(userLogin);
+    }
+
+    public void createDraftMessage(Message message) {
         gmailHomePage.clickOnWriteSomeoneButton();
-        gmailFormSendMessage.clickOnEmailsCopy();
-        gmailFormSendMessage.clickOnEmailsHiddenCopy();
-        gmailFormSendMessage.fillEmailField(emailsReceive);
-        gmailFormSendMessage.fillEmailCopyField(emailsCopyReceive);
-        gmailFormSendMessage.fillEmailHiddenCopyField(emailsHiddenCopyReceive);
-        gmailFormSendMessage.fillThemeField(theme);
-        gmailFormSendMessage.fillMessageField(message);
+        gmailFormSendMessage.clickOnCC();
+        gmailFormSendMessage.clickOnBCC();
+        gmailFormSendMessage.fillEmailField(message.getTo());
+        gmailFormSendMessage.fillCCField(message.getCc());
+        gmailFormSendMessage.fillBCCField(message.getBcc());
+        gmailFormSendMessage.fillSubjectField(message.getSubject());
+        gmailFormSendMessage.fillMessageField(message.getMessage());
         gmailFormSendMessage.clickOnButtonSaveAndCloseFormMessage();
     }
 
-    public void goToDraftMessagesAndCheckAllFields() {
+    public void goToDraftMessagesClickOnLastMessage() {
         gmailHomePage.clickOnPreviouslySavedMessages();
         gmailHomePage.clickOnLastSavedMessage();
-        gmailFormSendMessage.clickOnShowHiddenCopyAndCopyMails();
-        String actualEmailSend = gmailFormSendMessage.getTextFieldWhichEmailsSend();
-        assertEquals(actualEmailSend, getWhoReceiveMessage());
+        gmailFormSendMessage.clickOnShowEmailsFields();
+    }
+
+    public Message getMessage() {
+        String actualTo = gmailFormSendMessage.getTextFieldWhichEmailsSend();
+        String actualCC = gmailFormSendMessage.getTextFieldEmailsCopySend();
+        String actualBCC = gmailFormSendMessage.getTextFieldEmailsHiddenCopySend();
+        String actualSubject = gmailFormSendMessage.getTextFieldThemeSend();
+        String actualMess = gmailFormSendMessage.getTextFieldMessageSend();
+        return new Message(actualTo, actualCC, actualBCC, actualSubject, actualMess);
     }
 
     public void sendMessage() {
