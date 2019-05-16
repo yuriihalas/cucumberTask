@@ -1,6 +1,6 @@
-package com.halas.pages.gmail;
+package com.halas.page.gmail;
 
-import com.halas.pages.CommonPage;
+import com.halas.page.CommonPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,6 +27,10 @@ public class GmailFormSendMessage extends CommonPage {
     private WebElement sendMessage;
     @FindBy(css = "form[enctype='multipart/form-data']>div:nth-child(2)")
     private WebElement areaHiddenCopyAndCopyEmailsSend;
+
+    public void clickOnEmail(){
+        fieldWhichEmailsSend.click();
+    }
 
     public void clickOnCC() {
         driverWait.until(ExpectedConditions.visibilityOf(buttonEmailsCopy));

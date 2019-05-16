@@ -1,4 +1,6 @@
-package com.halas.models;
+package com.halas.model;
+
+import java.util.Objects;
 
 public class Message {
     private String to;
@@ -6,6 +8,9 @@ public class Message {
     private String bcc;
     private String subject;
     private String message;
+
+    public Message() {
+    }
 
     public Message(String to, String cc, String bcc, String subject, String message) {
         this.to = to;
@@ -53,5 +58,22 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message1 = (Message) o;
+        return Objects.equals(to, message1.to) &&
+                Objects.equals(cc, message1.cc) &&
+                Objects.equals(bcc, message1.bcc) &&
+                Objects.equals(subject, message1.subject) &&
+                Objects.equals(message, message1.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(to, cc, bcc, subject, message);
     }
 }

@@ -1,57 +1,52 @@
 package com.halas;
 
-import com.halas.drivers.WebDriverManager;
-import com.halas.models.Message;
-import com.halas.pages.business.GmailBO;
+import com.halas.business.GmailAuthorisationBO;
+import com.halas.business.GmailMessageBO;
+import com.halas.driver.WebDriverManager;
+import com.halas.listener.MyTestListener;
+import com.halas.model.Message;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import static com.halas.parsers.JsonParser.*;
+import static com.halas.driver.WebDriverManager.getWebDriver;
+import static com.halas.parser.JsonParser.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Listeners({MyTestListener.class})
 public class GmailTest {
     private static final Logger LOG = LogManager.getLogger(GmailTest.class);
 
     @DataProvider(parallel = true)
     public Iterator<Object[]> usersLoginPassword() {
-        return Stream.of(
-                new Object[]{"paprika0020@gmail.com", "423489123789op"},
-                new Object[]{"paprika0019@gmail.com", "423489123789op"},
-                new Object[]{"paprika0018@gmail.com", "423489123789op"},
-                new Object[]{"paprika0017@gmail.com", "423489123789op"},
-                new Object[]{"paprika0015@gmail.com", "423489123789op"}).iterator();
+        return Stream.of(getUsers()).iterator();
     }
 
     @BeforeMethod
     void initUrlAndPages() {
-        WebDriverManager.getWebDriver().get(getBaseUrl());
+        getWebDriver().get(getBaseUrl());
     }
 
     @Test(dataProvider = "usersLoginPassword")
     void testSingInAndGoToSavedMessageAndCheckCorrectAndSendMess(String userLogin, String userPassword) {
-        GmailBO gmailBO = new GmailBO();
+        GmailAuthorisationBO gmailAuthorisationBO = new GmailAuthorisationBO();
+        GmailMessageBO gmailMessageBO = new GmailMessageBO();
         Message message = new Message(getWhoReceiveMessage(), getWhoReceiveCopyMessage(), getWhoReceiveHiddenCopyMessage(), getThemeMessage(), getMessage());
-        gmailBO.authoriseUser(userLogin, userPassword);
+        gmailAuthorisationBO.authoriseUser(userLogin, userPassword);
         //assert to success login
-        assertTrue(gmailBO.checkSuccessAuthorisation(userLogin));
-        LOG.info("Title page: " + WebDriverManager.getWebDriver().getTitle());
-        //click on write someone button will open mailFormSendMessage
-        gmailBO.createDraftMessage(message);
-        gmailBO.goToDraftMessagesClickOnLastMessage();
-        Message actualMessage = gmailBO.getMessage();
-        //assert actual and expected results
+        assertTrue(gmailAuthorisationBO.checkSuccessAuthorisation(userLogin));
+        LOG.info("Title page: " + getWebDriver().getTitle());
+        gmailMessageBO.createDraftMessage(message);
+        gmailMessageBO.goToDraftMessagesClickOnLastMessage();
+        Message actualMessage = gmailMessageBO.getMessage();
+        //assert actual and expected fields from message
         assertEquals(actualMessage, message);
         LOG.info("Message FINE.");
-        //send message
-        gmailBO.sendMessage();
+        gmailMessageBO.sendMessage();
     }
 
     @AfterMethod

@@ -1,6 +1,6 @@
-package com.halas.pages.gmail;
+package com.halas.page.gmail;
 
-import com.halas.pages.CommonPage;
+import com.halas.page.CommonPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class GmailAuthorizationPage extends CommonPage {
     @FindBy(id = "identifierId")
     private WebElement loginField;
-    @FindBy(id = "identifierNext")
+    @FindBy(css = "*[role='button'][id='identifierNext']")
     private WebElement nextButtonLogin;
     @FindBy(css = "input[name='password']")
     private WebElement passwordField;

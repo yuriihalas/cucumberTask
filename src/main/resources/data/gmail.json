@@ -1,7 +1,21 @@
 {
   "url-base": "https://mail.google.com/",
-  "user-login": "paprika0015",
-  "user-password": "423489123789op",
+  "users": {
+    "login": [
+      "paprika0015@gmail.com",
+      "paprika0017@gmail.com",
+      "paprika0018@gmail.com",
+      "paprika0019@gmail.com",
+      "paprika0020@gmail.com"
+    ],
+    "password": [
+      "423489123789op",
+      "423489123789op",
+      "423489123789op",
+      "423489123789op",
+      "423489123789op"
+    ]
+  },
   "who-receive-message": "groot.epam@gmail.com",
   "who-receive-copy-message": "orest.zhmurkevych.secondary@gmail.com",
   "who-receive-hidden-copy-message": "galasyra6@gmail.com",

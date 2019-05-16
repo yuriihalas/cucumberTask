@@ -1,6 +1,6 @@
-package com.halas.pages.gmail;
+package com.halas.page.gmail;
 
-import com.halas.pages.CommonPage;
+import com.halas.page.CommonPage;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

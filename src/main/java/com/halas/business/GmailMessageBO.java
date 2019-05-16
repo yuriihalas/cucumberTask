@@ -1,34 +1,21 @@
-package com.halas.pages.business;
+package com.halas.business;
 
-import com.halas.models.Message;
-import com.halas.pages.gmail.GmailAuthorizationPage;
-import com.halas.pages.gmail.GmailFormSendMessage;
-import com.halas.pages.gmail.GmailHomePage;
-import org.openqa.selenium.WebElement;
+import com.halas.model.Message;
+import com.halas.page.gmail.GmailFormSendMessage;
+import com.halas.page.gmail.GmailHomePage;
 
-public class GmailBO {
-    private GmailAuthorizationPage authorizationPage;
+public class GmailMessageBO {
     private GmailFormSendMessage gmailFormSendMessage;
     private GmailHomePage gmailHomePage;
 
-    public GmailBO() {
-        authorizationPage = new GmailAuthorizationPage();
+    public GmailMessageBO() {
         gmailFormSendMessage = new GmailFormSendMessage();
         gmailHomePage = new GmailHomePage();
     }
 
-    public void authoriseUser(String login, String password) {
-        authorizationPage.fillLoginAreaAndClickNext(login);
-        authorizationPage.fillPasswordAreaAndClickNext(password);
-    }
-
-    public boolean checkSuccessAuthorisation(String userLogin) {
-        WebElement accountCircle = gmailHomePage.getAccountCircle();
-        return accountCircle.getAttribute("aria-label").contains(userLogin);
-    }
-
     public void createDraftMessage(Message message) {
         gmailHomePage.clickOnWriteSomeoneButton();
+        gmailFormSendMessage.clickOnEmail();
         gmailFormSendMessage.clickOnCC();
         gmailFormSendMessage.clickOnBCC();
         gmailFormSendMessage.fillEmailField(message.getTo());

@@ -1,7 +1,8 @@
-package com.halas.parsers;
+package com.halas.parser;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -24,16 +25,30 @@ public class JsonParser {
         }
     }
 
+    public static Object[][] getUsers() {
+        int amountUsers = getAmountUsers();
+        Object[][] users = new Object[amountUsers][];
+        for (int i = 0; i < amountUsers; i++) {
+            users[i] = new Object[]{getUserLogin(i), getUserPassword(i)};
+        }
+        return users;
+    }
+
+
+    private static int getAmountUsers() {
+        return ((JSONArray) ((JSONObject) jsonObject.get("users")).get("login")).size();
+    }
+
+    private static String getUserLogin(int index) {
+        return (String) ((JSONArray) ((JSONObject) jsonObject.get("users")).get("login")).get(index);
+    }
+
+    private static String getUserPassword(int index) {
+        return (String) ((JSONArray) ((JSONObject) jsonObject.get("users")).get("password")).get(index);
+    }
+
     public static String getBaseUrl() {
         return jsonObject.get("url-base").toString();
-    }
-
-    public static String getUserLogin() {
-        return jsonObject.get("user-login").toString();
-    }
-
-    public static String getUserPassword() {
-        return jsonObject.get("user-password").toString();
     }
 
     public static String getWhoReceiveMessage() {

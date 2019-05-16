@@ -1,10 +1,10 @@
-package com.halas.pages;
+package com.halas.page;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static com.halas.drivers.WebDriverManager.getWebDriver;
+import static com.halas.driver.WebDriverManager.getWebDriver;
 import static com.halas.property.HandleProperty.getValueProperty;
 
 public abstract class CommonPage {
