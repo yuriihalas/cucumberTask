@@ -44,6 +44,35 @@ public class GmailFormSendMessage extends CommonPage {
         fieldMessageSend.sendKeys(message);
     }
 
+    public void clickOnEmailsCopy() {
+        driverWait.until(ExpectedConditions.visibilityOf(buttonEmailsCopy));
+        buttonEmailsCopy.click();
+    }
+
+    public void clickOnEmailsHiddenCopy() {
+        buttonEmailsHiddenCopy.click();
+    }
+
+    public void fillEmailField(String emailsReceive) {
+        fieldWhichEmailsSend.sendKeys(emailsReceive);
+    }
+
+    public void fillEmailCopyField(String emailsCopyReceive) {
+        fieldEmailsCopySend.sendKeys(emailsCopyReceive);
+    }
+
+    public void fillEmailHiddenCopyField(String emailsHiddenCopyReceive) {
+        fieldEmailsHiddenCopySend.sendKeys(emailsHiddenCopyReceive);
+    }
+
+    public void fillThemeField(String theme) {
+        fieldThemeSend.sendKeys(theme);
+    }
+
+    public void fillMessageField(String message) {
+        fieldMessageSend.sendKeys(message);
+    }
+
     public void clickOnButtonSaveAndCloseFormMessage() {
         buttonSaveAndCloseFormMessage.click();
     }

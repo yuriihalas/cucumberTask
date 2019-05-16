@@ -4,7 +4,7 @@ import com.halas.drivers.WebDriverManager;
 import com.halas.pages.gmail.GmailAuthorizationPage;
 import com.halas.pages.gmail.GmailFormSendMessage;
 import com.halas.pages.gmail.GmailHomePage;
-import com.halas.parsers.JsonParser;
+import com.halas.pages.business.GmailBO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
@@ -13,17 +13,13 @@ import org.testng.annotations.*;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+import static com.halas.parsers.JsonParser.*;
+import static com.halas.parsers.JsonParser.getMessage;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class GmailTest {
     private static final Logger LOG = LogManager.getLogger(GmailTest.class);
-    private static final String BASE_URL_PAGE = JsonParser.getBaseUrl();
-    private static final String EMAIL_SEND = JsonParser.getWhoReceiveMessage();
-    private static final String EMAIL_COPY_SEND = JsonParser.getWhoReceiveCopyMessage();
-    private static final String EMAIL_HIDDEN_COPY_SEND = JsonParser.getWhoReceiveHiddenCopyMessage();
-    private static final String THEME_SEND = JsonParser.getThemeMessage();
-    private static final String MESSAGE_SEND = JsonParser.getMessage();
 
     @DataProvider(parallel = true)
     public Iterator<Object[]> usersLoginPassword() {
@@ -37,7 +33,7 @@ public class GmailTest {
 
     @BeforeMethod
     void initUrlAndPages() {
-        WebDriverManager.getWebDriver().get(BASE_URL_PAGE);
+        WebDriverManager.getWebDriver().get(getBaseUrl());
     }
 
     @Test(dataProvider = "usersLoginPassword")
@@ -45,19 +41,22 @@ public class GmailTest {
         GmailAuthorizationPage authorizationPage = new GmailAuthorizationPage();
         GmailHomePage gmailHomePage = new GmailHomePage();
         GmailFormSendMessage gmailFormSendMessage = new GmailFormSendMessage();
-        //authorization block
-        authorizationPage.fillLoginAreaAndClickNext(userLogin);
-        authorizationPage.fillPasswordAreaAndClickNext(userPassword);
+        GmailBO gmailBO = new GmailBO();
+
+        gmailBO.authoriseUser(userLogin, userPassword);
+        //assert to success login
         WebElement accountCircle = gmailHomePage.getAccountCircle();
         assertTrue(accountCircle.getAttribute("aria-label").contains(userLogin));
         LOG.info("Title page: " + WebDriverManager.getWebDriver().getTitle());
         //click on write someone button will open mailFormSendMessage
-        gmailHomePage.clickOnWriteSomeoneButton();
-        gmailFormSendMessage.fillFormSend(EMAIL_SEND, EMAIL_COPY_SEND, EMAIL_HIDDEN_COPY_SEND, THEME_SEND, MESSAGE_SEND);
-        gmailFormSendMessage.clickOnButtonSaveAndCloseFormMessage();
-        gmailHomePage.clickOnPreviouslySavedMessages();
-        gmailHomePage.clickOnLastSavedMessage();
-        gmailFormSendMessage.clickOnShowHiddenCopyAndCopyMails();
+        gmailBO.createDraftMessage(
+                getWhoReceiveMessage(),
+                getWhoReceiveCopyMessage(),
+                getWhoReceiveHiddenCopyMessage(),
+                getThemeMessage(),
+                getMessage());
+
+        gmailBO.goToDraftMessagesAndCheckAllFields();
         //get all fields from formMessage
         String actualEmailSend = gmailFormSendMessage.getTextFieldWhichEmailsSend();
         String actualEmailCopySend = gmailFormSendMessage.getTextFieldEmailsCopySend();
@@ -65,19 +64,18 @@ public class GmailTest {
         String actualThemeSend = gmailFormSendMessage.getTextFieldThemeSend();
         String actualMessageSend = gmailFormSendMessage.getTextFieldMessageSend();
         //assert actual and expected results
-        assertEquals(actualEmailSend, EMAIL_SEND);
+        assertEquals(actualEmailSend, getWhoReceiveMessage());
         LOG.info("Email FINE.");
-        assertEquals(actualEmailCopySend, EMAIL_COPY_SEND);
+        assertEquals(actualEmailCopySend, getWhoReceiveCopyMessage());
         LOG.info("Email copy FINE.");
-        assertEquals(actualEmailHiddenCopySend, EMAIL_HIDDEN_COPY_SEND);
+        assertEquals(actualEmailHiddenCopySend, getWhoReceiveHiddenCopyMessage());
         LOG.info("Email hidden copy FINE.");
-        assertEquals(actualThemeSend, THEME_SEND);
+        assertEquals(actualThemeSend, getThemeMessage());
         LOG.info("Message subject FINE.");
-        assertEquals(actualMessageSend, MESSAGE_SEND);
+        assertEquals(actualMessageSend, getMessage());
         LOG.info("Message FINE.");
         //send message
-        gmailFormSendMessage.clickOnSendMessage();
-        gmailFormSendMessage.waitUntilMessageSendingWasEnd();
+        gmailBO.sendMessage();
     }
 
     @AfterMethod
