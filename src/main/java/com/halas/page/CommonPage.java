@@ -5,7 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.halas.driver.WebDriverManager.getWebDriver;
-import static com.halas.property.HandleProperty.getValueProperty;
+import static com.halas.utils.property.HandleProperty.getValueProperty;
 
 public abstract class CommonPage {
     protected WebDriver driver;

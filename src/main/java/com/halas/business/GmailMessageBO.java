@@ -26,9 +26,9 @@ public class GmailMessageBO {
         gmailFormSendMessage.clickOnButtonSaveAndCloseFormMessage();
     }
 
-    public void goToDraftMessagesClickOnLastMessage() {
-        gmailHomePage.clickOnPreviouslySavedMessages();
-        gmailHomePage.clickOnLastSavedMessage();
+    public void goToDraftMessagesClickOnFirstOnTopMessage() {
+        gmailHomePage.clickOnDraftsMessages();
+        gmailHomePage.clickOnFirstOnTopSavedMessage();
         gmailFormSendMessage.clickOnShowEmailsFields();
     }
 

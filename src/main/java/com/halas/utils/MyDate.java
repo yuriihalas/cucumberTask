@@ -3,7 +3,7 @@ package com.halas.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MyDate {
+public final class MyDate {
 
     private MyDate() {
     }

@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static com.halas.driver.WebDriverManager.getWebDriver;
 
-public class TakeScreenshot {
+public final class TakeScreenshot {
     private static final Logger LOG = LogManager.getLogger(TakeScreenshot.class);
     private static final String PATH_TO_SAVE_SCREEN = "src/main/resources/screenshots/screenshot-%s.png";
 

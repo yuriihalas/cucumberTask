@@ -1,4 +1,4 @@
-package com.halas.parser;
+package com.halas.utils.parser;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

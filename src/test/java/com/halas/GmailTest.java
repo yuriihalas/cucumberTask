@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.stream.Stream;
 
 import static com.halas.driver.WebDriverManager.getWebDriver;
-import static com.halas.parser.JsonParser.*;
+import static com.halas.utils.parser.JsonParser.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -41,7 +41,7 @@ public class GmailTest {
         assertTrue(gmailAuthorisationBO.checkSuccessAuthorisation(userLogin));
         LOG.info("Title page: " + getWebDriver().getTitle());
         gmailMessageBO.createDraftMessage(message);
-        gmailMessageBO.goToDraftMessagesClickOnLastMessage();
+        gmailMessageBO.goToDraftMessagesClickOnFirstOnTopMessage();
         Message actualMessage = gmailMessageBO.getMessage();
         //assert actual and expected fields from message
         assertEquals(actualMessage, message);
