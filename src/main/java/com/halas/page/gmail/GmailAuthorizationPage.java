@@ -1,28 +1,30 @@
 package com.halas.page.gmail;
 
+import com.halas.decorator.element.realisation.Button;
+import com.halas.decorator.element.realisation.EditText;
 import com.halas.page.CommonPage;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class GmailAuthorizationPage extends CommonPage {
     @FindBy(id = "identifierId")
-    private WebElement loginField;
+    private EditText loginField;
     @FindBy(css = "*[role='button'][id='identifierNext']")
-    private WebElement nextButtonLogin;
+    private Button nextLogin;
     @FindBy(css = "input[name='password']")
-    private WebElement passwordField;
+    private EditText passwordField;
     @FindBy(id = "passwordNext")
-    private WebElement nextButtonPassword;
+    private Button nextPassword;
 
     public void fillLoginAreaAndClickNext(String login) {
-        loginField.sendKeys(login);
-        nextButtonLogin.click();
+        loginField.fillElement(login);
+        driverWait.until(ExpectedConditions.visibilityOf(nextLogin.getElement()));
+        nextLogin.click();
     }
 
     public void fillPasswordAreaAndClickNext(String password) {
-        driverWait.until(ExpectedConditions.visibilityOf(passwordField));
-        passwordField.sendKeys(password);
-        nextButtonPassword.click();
+        driverWait.until(ExpectedConditions.visibilityOf(passwordField.getElement()));
+        passwordField.fillElement(password);
+        nextPassword.click();
     }
 }

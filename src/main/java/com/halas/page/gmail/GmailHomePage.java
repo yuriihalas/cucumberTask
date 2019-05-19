@@ -1,5 +1,7 @@
 package com.halas.page.gmail;
 
+import com.halas.decorator.element.realisation.Button;
+import com.halas.decorator.element.realisation.Image;
 import com.halas.page.CommonPage;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -8,31 +10,31 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class GmailHomePage extends CommonPage {
     @FindBy(css = "header a[href$='mail.google.com/mail&service=mail'][aria-label*='Google:'][role='button']")
-    private WebElement accountCircle;
+    private Image accountCircle;
     @FindBy(css = "[jscontroller='DUNnfe'] [role='button']")
-    private WebElement writeSomeoneButton;
+    private Button writeSomeone;
     @FindBy(css = "a[href$='#drafts'][target='_top']")
-    private WebElement prevoiusSavedMessage;
+    private Button draftMessages;
     @FindBy(css = "div.AO div[role='main'] tbody>tr:first-child")
-    private WebElement lastSavedMessage;
+    private Button lastSavedMessage;
 
     public WebElement getAccountCircle() {
-        return accountCircle;
+        return accountCircle.getElement();
     }
 
     public void clickOnWriteSomeoneButton() {
-        driverWait.until(ExpectedConditions.elementToBeClickable(writeSomeoneButton));
-        writeSomeoneButton.click();
+        driverWait.until(ExpectedConditions.elementToBeClickable(writeSomeone.getElement()));
+        writeSomeone.click();
     }
 
     public void clickOnDraftsMessages() {
-        driverWait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(prevoiusSavedMessage));
-        prevoiusSavedMessage.click();
-        driverWait.until(ExpectedConditions.attributeToBe(prevoiusSavedMessage, "tabindex", "0"));
+        driverWait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(draftMessages.getElement()));
+        draftMessages.click();
+        driverWait.until(ExpectedConditions.attributeToBe(draftMessages.getElement(), "tabindex", "0"));
     }
 
     public void clickOnFirstOnTopSavedMessage() {
-        driverWait.until(ExpectedConditions.elementToBeClickable(lastSavedMessage));
+        driverWait.until(ExpectedConditions.elementToBeClickable(lastSavedMessage.getElement()));
         lastSavedMessage.click();
     }
 }

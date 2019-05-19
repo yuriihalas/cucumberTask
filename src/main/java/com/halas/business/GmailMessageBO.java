@@ -15,6 +15,9 @@ public class GmailMessageBO {
 
     public void createDraftMessage(Message message) {
         gmailHomePage.clickOnWriteSomeoneButton();
+        if (gmailFormSendMessage.isDisplayedEmailFieldWithoutCcAndBcc()) {
+            gmailFormSendMessage.clickOnEmailField();
+        }
         gmailFormSendMessage.clickOnEmail();
         gmailFormSendMessage.clickOnCC();
         gmailFormSendMessage.clickOnBCC();
@@ -29,15 +32,15 @@ public class GmailMessageBO {
     public void goToDraftMessagesClickOnFirstOnTopMessage() {
         gmailHomePage.clickOnDraftsMessages();
         gmailHomePage.clickOnFirstOnTopSavedMessage();
-        gmailFormSendMessage.clickOnShowEmailsFields();
+        gmailFormSendMessage.clickOnEmailField();
     }
 
     public Message getMessage() {
         String actualTo = gmailFormSendMessage.getTextFieldWhichEmailsSend();
-        String actualCC = gmailFormSendMessage.getTextFieldEmailsCopySend();
-        String actualBCC = gmailFormSendMessage.getTextFieldEmailsHiddenCopySend();
+        String actualCC = gmailFormSendMessage.getTextFromCcField();
+        String actualBCC = gmailFormSendMessage.getTextFromBccField();
         String actualSubject = gmailFormSendMessage.getTextFieldThemeSend();
-        String actualMess = gmailFormSendMessage.getTextFieldMessageSend();
+        String actualMess = gmailFormSendMessage.getTextFromMessage();
         return new Message(actualTo, actualCC, actualBCC, actualSubject, actualMess);
     }
 

@@ -1,75 +1,81 @@
 package com.halas.page.gmail;
 
+import com.halas.decorator.element.realisation.Button;
+import com.halas.decorator.element.realisation.EditText;
 import com.halas.page.CommonPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class GmailFormSendMessage extends CommonPage {
     @FindBy(css = "form[enctype='multipart/form-data'] textarea[name='to']")
-    private WebElement fieldWhichEmailsSend;
+    private EditText fieldWhichEmailsSend;
     @FindBy(css = "[aria-label*='Ctrl'][aria-label*='Shift'][aria-label*='C'][role='link']")
-    private WebElement buttonEmailsCopy;
+    private Button openCCfield;
     @FindBy(name = "cc")
-    private WebElement fieldEmailsCopySend;
+    private EditText fieldCC;
     @FindBy(css = "[aria-label*='Ctrl'][aria-label*='Shift'][aria-label*='B'][role='link']")
-    private WebElement buttonEmailsHiddenCopy;
+    private Button openBCCfield;
     @FindBy(name = "bcc")
-    private WebElement fieldEmailsHiddenCopySend;
+    private EditText fieldBCC;
     @FindBy(name = "subjectbox")
-    private WebElement fieldThemeSend;
+    private EditText fieldSubject;
     @FindBy(css = "div[role='textbox']")
-    private WebElement fieldMessageSend;
+    private EditText fieldMessageSend;
     @FindBy(css = "*[class='Ha'][src='images/cleardot.gif']")
-    private WebElement buttonSaveAndCloseFormMessage;
+    private Button saveAndCloseFormMessage;
     @FindBy(css = "div[role='button'][data-tooltip*='Ctrl'][data-tooltip*='Enter']")
-    private WebElement sendMessage;
+    private Button sendMessage;
+    //means email when focus on another elements
     @FindBy(css = "form[enctype='multipart/form-data']>div:nth-child(2)")
-    private WebElement areaHiddenCopyAndCopyEmailsSend;
+    private Button email;
 
     public void clickOnEmail(){
         fieldWhichEmailsSend.click();
     }
 
     public void clickOnCC() {
-        driverWait.until(ExpectedConditions.visibilityOf(buttonEmailsCopy));
-        buttonEmailsCopy.click();
+        driverWait.until(ExpectedConditions.visibilityOf(openCCfield.getElement()));
+        openCCfield.click();
     }
 
     public void clickOnBCC() {
-        buttonEmailsHiddenCopy.click();
+        openBCCfield.click();
     }
 
     public void fillEmailField(String emailsReceive) {
-        fieldWhichEmailsSend.sendKeys(emailsReceive);
+        fieldWhichEmailsSend.fillElement(emailsReceive);
     }
 
     public void fillCCField(String emailsCopyReceive) {
-        fieldEmailsCopySend.sendKeys(emailsCopyReceive);
+        fieldCC.fillElement(emailsCopyReceive);
     }
 
     public void fillBCCField(String emailsHiddenCopyReceive) {
-        fieldEmailsHiddenCopySend.sendKeys(emailsHiddenCopyReceive);
+        fieldBCC.fillElement(emailsHiddenCopyReceive);
     }
 
-    public void fillSubjectField(String theme) {
-        fieldThemeSend.sendKeys(theme);
+    public void fillSubjectField(String subject) {
+        fieldSubject.fillElement(subject);
     }
 
     public void fillMessageField(String message) {
-        fieldMessageSend.sendKeys(message);
+        fieldMessageSend.fillElement(message);
     }
 
     public void clickOnButtonSaveAndCloseFormMessage() {
-        buttonSaveAndCloseFormMessage.click();
+        saveAndCloseFormMessage.click();
     }
 
-    public void clickOnShowEmailsFields() {
+    public void clickOnEmailField() {
         driverWait.until(webDriver -> {
-            areaHiddenCopyAndCopyEmailsSend.click();
+            email.click();
             return true;
         });
+    }
+
+    public boolean isDisplayedEmailFieldWithoutCcAndBcc(){
+        return email.isDisplayed();
     }
 
     public void clickOnSendMessage() {
@@ -81,12 +87,12 @@ public class GmailFormSendMessage extends CommonPage {
                 .getAttribute("value");
     }
 
-    public String getTextFieldEmailsCopySend() {
-        return fieldEmailsCopySend.getAttribute("value");
+    public String getTextFromCcField() {
+        return fieldCC.getElement().getAttribute("value");
     }
 
-    public String getTextFieldEmailsHiddenCopySend() {
-        return fieldEmailsHiddenCopySend.getAttribute("value");
+    public String getTextFromBccField() {
+        return fieldBCC.getElement().getAttribute("value");
     }
 
     public String getTextFieldThemeSend() {
@@ -95,7 +101,7 @@ public class GmailFormSendMessage extends CommonPage {
                 .getAttribute("value");
     }
 
-    public String getTextFieldMessageSend() {
+    public String getTextFromMessage() {
         return fieldMessageSend.getText();
     }
 

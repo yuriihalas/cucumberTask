@@ -1,5 +1,6 @@
 package com.halas.page;
 
+import com.halas.decorator.CustomFieldDecorator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,6 +19,6 @@ public abstract class CommonPage {
     private void initElements() {
         driver = getWebDriver();
         driverWait = new WebDriverWait(driver, Integer.valueOf(getValueProperty("explicit-wait-time")));
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new CustomFieldDecorator(driver), this);
     }
 }
