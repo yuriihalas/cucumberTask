@@ -6,6 +6,8 @@ import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
+
 public class CustomFieldDecorator extends DefaultFieldDecorator {
 
     public CustomFieldDecorator(SearchContext searchContext) {
@@ -19,12 +21,11 @@ public class CustomFieldDecorator extends DefaultFieldDecorator {
     public Object decorate(ClassLoader loader, Field field) {
         Class<?> decoratableClass = decoratableClass(field);
         // якщо клас поля декорується
-        if (decoratableClass != null) {
+        if (Objects.nonNull(decoratableClass)) {
             ElementLocator locator = factory.createLocator(field);
-            if (locator == null) {
+            if (Objects.isNull(locator)) {
                 return null;
             }
-
             // елемент
             return createElement(loader, locator, decoratableClass);
         }
@@ -36,16 +37,13 @@ public class CustomFieldDecorator extends DefaultFieldDecorator {
      * або null якщо клас не підходить для декоратора
      */
     private Class<?> decoratableClass(Field field) {
-
         Class<?> clazz = field.getType();
-
         // у елемента повинен бути конструктор, приймаючий WebElement
         try {
             clazz.getConstructor(WebElement.class);
         } catch (Exception e) {
             return null;
         }
-
         return clazz;
     }
 

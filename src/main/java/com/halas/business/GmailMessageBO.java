@@ -13,20 +13,29 @@ public class GmailMessageBO {
         gmailHomePage = new GmailHomePage();
     }
 
-    public void createDraftMessage(Message message) {
+    public void createDraftMessage(final Message message) {
         gmailHomePage.clickOnWriteSomeoneButton();
-        if (gmailFormSendMessage.isDisplayedEmailFieldWithoutCcAndBcc()) {
+        //якщо знайде що курсор є не на елементі email, а на якомусь іншому
+        if (isMouseFocusOnNotEmailField()) {
             gmailFormSendMessage.clickOnEmailField();
         }
-        gmailFormSendMessage.clickOnEmail();
+        //gmailFormSendMessage.clickOnEmail();
         gmailFormSendMessage.clickOnCC();
         gmailFormSendMessage.clickOnBCC();
+        fillMessage(message);
+        gmailFormSendMessage.clickOnButtonSaveAndCloseFormMessage();
+    }
+
+    private void fillMessage(final Message message){
         gmailFormSendMessage.fillEmailField(message.getTo());
         gmailFormSendMessage.fillCCField(message.getCc());
         gmailFormSendMessage.fillBCCField(message.getBcc());
         gmailFormSendMessage.fillSubjectField(message.getSubject());
         gmailFormSendMessage.fillMessageField(message.getMessage());
-        gmailFormSendMessage.clickOnButtonSaveAndCloseFormMessage();
+    }
+
+    private boolean isMouseFocusOnNotEmailField() {
+        return gmailFormSendMessage.isDisplayedEmailFieldWithoutCcAndBcc();
     }
 
     public void goToDraftMessagesClickOnFirstOnTopMessage() {
@@ -46,6 +55,6 @@ public class GmailMessageBO {
 
     public void sendMessage() {
         gmailFormSendMessage.clickOnSendMessage();
-        gmailFormSendMessage.waitUntilMessageSendingWasEnd();
+        gmailFormSendMessage.waitUntilSendingMessageWillEnd();
     }
 }

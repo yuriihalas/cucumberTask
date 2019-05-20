@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class GmailFormSendMessage extends CommonPage {
+    //means email field when focus on email
     @FindBy(css = "form[enctype='multipart/form-data'] textarea[name='to']")
     private EditText fieldWhichEmailsSend;
     @FindBy(css = "[aria-label*='Ctrl'][aria-label*='Shift'][aria-label*='C'][role='link']")
@@ -29,10 +30,12 @@ public class GmailFormSendMessage extends CommonPage {
     //means email when focus on another elements
     @FindBy(css = "form[enctype='multipart/form-data']>div:nth-child(2)")
     private Button email;
+/*
 
     public void clickOnEmail(){
         fieldWhichEmailsSend.click();
     }
+*/
 
     public void clickOnCC() {
         driverWait.until(ExpectedConditions.visibilityOf(openCCfield.getElement()));
@@ -44,23 +47,23 @@ public class GmailFormSendMessage extends CommonPage {
     }
 
     public void fillEmailField(String emailsReceive) {
-        fieldWhichEmailsSend.fillElement(emailsReceive);
+        fieldWhichEmailsSend.sendKeys(emailsReceive);
     }
 
     public void fillCCField(String emailsCopyReceive) {
-        fieldCC.fillElement(emailsCopyReceive);
+        fieldCC.sendKeys(emailsCopyReceive);
     }
 
     public void fillBCCField(String emailsHiddenCopyReceive) {
-        fieldBCC.fillElement(emailsHiddenCopyReceive);
+        fieldBCC.sendKeys(emailsHiddenCopyReceive);
     }
 
     public void fillSubjectField(String subject) {
-        fieldSubject.fillElement(subject);
+        fieldSubject.sendKeys(subject);
     }
 
     public void fillMessageField(String message) {
-        fieldMessageSend.fillElement(message);
+        fieldMessageSend.sendKeys(message);
     }
 
     public void clickOnButtonSaveAndCloseFormMessage() {
@@ -105,7 +108,7 @@ public class GmailFormSendMessage extends CommonPage {
         return fieldMessageSend.getText();
     }
 
-    public void waitUntilMessageSendingWasEnd() {
+    public void waitUntilSendingMessageWillEnd() {
         driverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(
                 "[role='alert'] [role='link'][id='link_undo']")));
     }

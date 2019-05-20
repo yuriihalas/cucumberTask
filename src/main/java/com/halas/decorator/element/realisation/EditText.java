@@ -8,7 +8,7 @@ public class EditText extends CommonElement {
         super(webElement);
     }
 
-    public void fillElement(String text) {
+    public void sendKeys(String text) {
         webElement.sendKeys(text);
     }
 

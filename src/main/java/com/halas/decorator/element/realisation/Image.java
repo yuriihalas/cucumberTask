@@ -7,4 +7,12 @@ public class Image extends CommonElement {
     public Image(WebElement webElement) {
         super(webElement);
     }
+
+    public void click(){
+        webElement.click();
+    }
+
+    public boolean isDisplayed(){
+        return webElement.isDisplayed();
+    }
 }

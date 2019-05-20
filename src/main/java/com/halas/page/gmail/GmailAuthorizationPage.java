@@ -17,14 +17,14 @@ public class GmailAuthorizationPage extends CommonPage {
     private Button nextPassword;
 
     public void fillLoginAreaAndClickNext(String login) {
-        loginField.fillElement(login);
+        loginField.sendKeys(login);
         driverWait.until(ExpectedConditions.visibilityOf(nextLogin.getElement()));
         nextLogin.click();
     }
 
     public void fillPasswordAreaAndClickNext(String password) {
         driverWait.until(ExpectedConditions.visibilityOf(passwordField.getElement()));
-        passwordField.fillElement(password);
+        passwordField.sendKeys(password);
         nextPassword.click();
     }
 }

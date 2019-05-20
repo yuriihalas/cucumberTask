@@ -9,9 +9,6 @@ public class Message {
     private String subject;
     private String message;
 
-    public Message() {
-    }
-
     public Message(String to, String cc, String bcc, String subject, String message) {
         this.to = to;
         this.cc = cc;
@@ -24,40 +21,20 @@ public class Message {
         return to;
     }
 
-    public void setTo(String to) {
-        this.to = to;
-    }
-
     public String getCc() {
         return cc;
-    }
-
-    public void setCc(String cc) {
-        this.cc = cc;
     }
 
     public String getBcc() {
         return bcc;
     }
 
-    public void setBcc(String bcc) {
-        this.bcc = bcc;
-    }
-
     public String getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     @Override
@@ -75,5 +52,16 @@ public class Message {
     @Override
     public int hashCode() {
         return Objects.hash(to, cc, bcc, subject, message);
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "to='" + to + '\'' +
+                ", cc='" + cc + '\'' +
+                ", bcc='" + bcc + '\'' +
+                ", subject='" + subject + '\'' +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

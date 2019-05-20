@@ -10,7 +10,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class JsonParser {
+public final class JsonParser {
     private static final Logger LOG = LogManager.getLogger(JsonParser.class);
     private static JSONObject jsonObject;
 
@@ -23,6 +23,9 @@ public class JsonParser {
             LOG.error("Message: " + e.getMessage());
             LOG.error(e.getStackTrace());
         }
+    }
+
+    private JsonParser(){
     }
 
     public static Object[][] getUsers() {
@@ -52,22 +55,22 @@ public class JsonParser {
     }
 
     public static String getWhoReceiveMessage() {
-        return jsonObject.get("who-receive-message").toString();
+        return ((JSONObject) jsonObject.get("message")).get("who-receive-message").toString();
     }
 
     public static String getWhoReceiveCopyMessage() {
-        return jsonObject.get("who-receive-copy-message").toString();
+        return ((JSONObject) jsonObject.get("message")).get("who-receive-copy-message").toString();
     }
 
     public static String getWhoReceiveHiddenCopyMessage() {
-        return jsonObject.get("who-receive-hidden-copy-message").toString();
+        return ((JSONObject) jsonObject.get("message")).get("who-receive-hidden-copy-message").toString();
     }
 
     public static String getThemeMessage() {
-        return jsonObject.get("theme-message").toString();
+        return ((JSONObject) jsonObject.get("message")).get("theme-message").toString();
     }
 
     public static String getMessage() {
-        return jsonObject.get("message").toString();
+        return ((JSONObject) jsonObject.get("message")).get("message").toString();
     }
 }

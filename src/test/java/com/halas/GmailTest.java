@@ -3,7 +3,7 @@ package com.halas;
 import com.halas.business.GmailAuthorisationBO;
 import com.halas.business.GmailMessageBO;
 import com.halas.driver.WebDriverManager;
-import com.halas.listener.MyTestListener;
+import com.halas.listener.CustomTestListener;
 import com.halas.model.Message;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +17,7 @@ import static com.halas.utils.parser.JsonParser.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-@Listeners({MyTestListener.class})
+@Listeners({CustomTestListener.class})
 public class GmailTest {
     private static final Logger LOG = LogManager.getLogger(GmailTest.class);
 
@@ -37,9 +37,9 @@ public class GmailTest {
         GmailMessageBO gmailMessageBO = new GmailMessageBO();
         Message message = new Message(getWhoReceiveMessage(), getWhoReceiveCopyMessage(), getWhoReceiveHiddenCopyMessage(), getThemeMessage(), getMessage());
         gmailAuthorisationBO.authoriseUser(userLogin, userPassword);
-        //assert to success login
+        //assert to success login by userLogin
         assertTrue(gmailAuthorisationBO.checkSuccessAuthorisation(userLogin));
-        LOG.info("Title page: " + getWebDriver().getTitle());
+        LOG.info("SUCCESS authorization.");
         gmailMessageBO.createDraftMessage(message);
         gmailMessageBO.goToDraftMessagesClickOnFirstOnTopMessage();
         Message actualMessage = gmailMessageBO.getMessage();

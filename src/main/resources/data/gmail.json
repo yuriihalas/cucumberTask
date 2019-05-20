@@ -16,9 +16,11 @@
       "423489123789op"
     ]
   },
-  "who-receive-message": "groot.epam@gmail.com",
-  "who-receive-copy-message": "orest.zhmurkevych.secondary@gmail.com",
-  "who-receive-hidden-copy-message": "galasyra6@gmail.com",
-  "theme-message": "Final battle",
-  "message": "Hello everyone!"
+  "message": {
+    "who-receive-message": "groot.epam@gmail.com",
+    "who-receive-copy-message": "orest.zhmurkevych.secondary@gmail.com",
+    "who-receive-hidden-copy-message": "galasyra6@gmail.com",
+    "theme-message": "Final battle",
+    "message": "Hello everyone!"
+  }
 }

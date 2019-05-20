@@ -7,9 +7,12 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
-public class HandleProperty {
+public final class HandleProperty {
     private static final String PATH_TO_PROPERTIES = "properties/config.properties";
     private static final Logger LOG = LogManager.getLogger(HandleProperty.class);
+
+    private HandleProperty(){
+    }
 
     public static String getValueProperty(String key) {
         Properties properties = new Properties();

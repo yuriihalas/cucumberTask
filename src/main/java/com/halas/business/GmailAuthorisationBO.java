@@ -13,12 +13,12 @@ public class GmailAuthorisationBO {
         gmailHomePage = new GmailHomePage();
     }
 
-    public void authoriseUser(String login, String password) {
+    public void authoriseUser(final String login, final String password) {
         authorizationPage.fillLoginAreaAndClickNext(login);
         authorizationPage.fillPasswordAreaAndClickNext(password);
     }
 
-    public boolean checkSuccessAuthorisation(String userLogin) {
+    public boolean checkSuccessAuthorisation(final String userLogin) {
         WebElement accountCircle = gmailHomePage.getAccountCircle();
         return accountCircle.getAttribute("aria-label").contains(userLogin);
     }
