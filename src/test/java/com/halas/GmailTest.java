@@ -31,7 +31,7 @@ public class GmailTest {
         getWebDriver().get(getBaseUrl());
     }
 
-    @Test(dataProvider = "usersLoginPassword")
+    @Test(dataProvider = "usersLoginPassword", invocationCount = 10)
     void testSingInAndGoToSavedMessageAndCheckCorrectAndSendMess(String userLogin, String userPassword) {
         GmailAuthorisationBO gmailAuthorisationBO = new GmailAuthorisationBO();
         GmailMessageBO gmailMessageBO = new GmailMessageBO();

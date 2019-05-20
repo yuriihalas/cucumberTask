@@ -19,6 +19,7 @@ public class GmailHomePage extends CommonPage {
     private Button lastSavedMessage;
 
     public WebElement getAccountCircle() {
+        driverWait.until(ExpectedConditions.visibilityOf(accountCircle.getElement()));
         return accountCircle.getElement();
     }
 

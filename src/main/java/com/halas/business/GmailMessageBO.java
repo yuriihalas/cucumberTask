@@ -41,7 +41,9 @@ public class GmailMessageBO {
     public void goToDraftMessagesClickOnFirstOnTopMessage() {
         gmailHomePage.clickOnDraftsMessages();
         gmailHomePage.clickOnFirstOnTopSavedMessage();
-        gmailFormSendMessage.clickOnEmailField();
+        if(isMouseFocusOnNotEmailField()) {
+            gmailFormSendMessage.clickOnEmailField();
+        }
     }
 
     public Message getMessage() {
