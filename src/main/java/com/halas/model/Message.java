@@ -9,7 +9,12 @@ public class Message {
     private String subject;
     private String message;
 
-    public Message(String to, String cc, String bcc, String subject, String message) {
+    public Message(
+            final String to,
+            final String cc,
+            final String bcc,
+            final String subject,
+            final String message) {
         this.to = to;
         this.cc = cc;
         this.bcc = bcc;
@@ -38,7 +43,7 @@ public class Message {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message1 = (Message) o;

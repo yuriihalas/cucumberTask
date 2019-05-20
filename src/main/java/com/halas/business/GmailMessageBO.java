@@ -26,7 +26,7 @@ public class GmailMessageBO {
         gmailFormSendMessage.clickOnButtonSaveAndCloseFormMessage();
     }
 
-    private void fillMessage(final Message message){
+    private void fillMessage(final Message message) {
         gmailFormSendMessage.fillEmailField(message.getTo());
         gmailFormSendMessage.fillCCField(message.getCc());
         gmailFormSendMessage.fillBCCField(message.getBcc());

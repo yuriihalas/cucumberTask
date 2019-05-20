@@ -8,11 +8,11 @@ public class Image extends CommonElement {
         super(webElement);
     }
 
-    public void click(){
+    public void click() {
         webElement.click();
     }
 
-    public boolean isDisplayed(){
+    public boolean isDisplayed() {
         return webElement.isDisplayed();
     }
 }

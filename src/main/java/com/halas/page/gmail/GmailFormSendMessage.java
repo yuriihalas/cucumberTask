@@ -30,8 +30,8 @@ public class GmailFormSendMessage extends CommonPage {
     //means email when focus on another elements
     @FindBy(css = "form[enctype='multipart/form-data']>div:nth-child(2)")
     private Button email;
-/*
 
+/*
     public void clickOnEmail(){
         fieldWhichEmailsSend.click();
     }
@@ -77,7 +77,7 @@ public class GmailFormSendMessage extends CommonPage {
         });
     }
 
-    public boolean isDisplayedEmailFieldWithoutCcAndBcc(){
+    public boolean isDisplayedEmailFieldWithoutCcAndBcc() {
         return email.isDisplayed();
     }
 

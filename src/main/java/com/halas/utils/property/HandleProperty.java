@@ -11,7 +11,7 @@ public final class HandleProperty {
     private static final String PATH_TO_PROPERTIES = "properties/config.properties";
     private static final Logger LOG = LogManager.getLogger(HandleProperty.class);
 
-    private HandleProperty(){
+    private HandleProperty() {
     }
 
     public static String getValueProperty(String key) {

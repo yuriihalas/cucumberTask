@@ -9,7 +9,7 @@ public abstract class CommonElement {
         this.webElement = webElement;
     }
 
-    public WebElement getElement(){
+    public WebElement getElement() {
         return webElement;
     }
 }

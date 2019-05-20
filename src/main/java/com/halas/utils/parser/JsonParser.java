@@ -15,6 +15,13 @@ public final class JsonParser {
     private static JSONObject jsonObject;
 
     static {
+        createInstanceJsonObject();
+    }
+
+    private JsonParser() {
+    }
+
+    private static void createInstanceJsonObject(){
         try {
             jsonObject = (JSONObject) (new JSONParser().parse(new FileReader("src/main/resources/data/gmail.json")));
         } catch (IOException | ParseException e) {
@@ -23,9 +30,6 @@ public final class JsonParser {
             LOG.error("Message: " + e.getMessage());
             LOG.error(e.getStackTrace());
         }
-    }
-
-    private JsonParser(){
     }
 
     public static Object[][] getUsers() {
