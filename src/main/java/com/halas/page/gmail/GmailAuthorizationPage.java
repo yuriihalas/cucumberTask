@@ -25,7 +25,6 @@ public class GmailAuthorizationPage extends CommonPage {
     public void fillPasswordAreaAndClickNext(String password) {
         driverWait.until(ExpectedConditions.visibilityOf(passwordField.getElement()));
         passwordField.sendKeys(password);
-        driverWait.until(ExpectedConditions.elementToBeClickable(nextLogin.getElement()));
         nextPassword.click();
     }
 }
