@@ -47,7 +47,7 @@ public class GmailMessageBO {
         LOG.info("Go to draft messages and click on first on top message.");
         gmailHomePage.clickOnDraftsMessages();
         gmailHomePage.clickOnFirstOnTopSavedMessage();
-        if(isMouseFocusOnNotEmailField()) {
+        if (isMouseFocusOnNotEmailField()) {
             gmailFormSendMessage.clickOnEmailField();
         }
     }

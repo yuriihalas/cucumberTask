@@ -4,12 +4,9 @@ import com.halas.decorator.element.realisation.Button;
 import com.halas.decorator.element.realisation.Image;
 import com.halas.page.CommonPage;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.util.function.Function;
 
 public class GmailHomePage extends CommonPage {
     @FindBy(css = "header a[href$='mail.google.com/mail&service=mail'][aria-label*='Google:'][role='button']")
@@ -32,12 +29,9 @@ public class GmailHomePage extends CommonPage {
     }
 
     public void clickOnDraftsMessages() {
-        driverWait.ignoring(StaleElementReferenceException.class).until(new Function<WebDriver, Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                draftMessages.click();
-                return true;
-            }
+        driverWait.ignoring(StaleElementReferenceException.class).until(webDriver -> {
+            draftMessages.click();
+            return true;
         });
         driverWait.until(ExpectedConditions.attributeToBe(draftMessages.getElement(), "tabindex", "0"));
     }
