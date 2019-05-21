@@ -1,4 +1,4 @@
-package com.halas.utils.property;
+package com.halas.util.property;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

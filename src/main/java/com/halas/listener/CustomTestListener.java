@@ -1,7 +1,7 @@
 package com.halas.listener;
 
-import com.halas.utils.MyDate;
-import com.halas.utils.TakeScreenshot;
+import com.halas.util.MyDate;
+import com.halas.util.TakeScreenshot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ITestResult;

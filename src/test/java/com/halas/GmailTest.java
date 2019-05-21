@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.stream.Stream;
 
 import static com.halas.driver.WebDriverManager.getWebDriver;
-import static com.halas.utils.parser.JsonParser.*;
+import static com.halas.util.parser.JsonParser.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 

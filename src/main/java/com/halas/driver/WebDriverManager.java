@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static com.halas.utils.property.HandleProperty.getValueProperty;
+import static com.halas.util.property.HandleProperty.getValueProperty;
 
 public final class WebDriverManager {
     private static final ThreadLocal<WebDriver> DRIVER_POOL = new ThreadLocal<>();

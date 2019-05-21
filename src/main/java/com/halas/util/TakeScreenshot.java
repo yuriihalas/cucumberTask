@@ -1,4 +1,4 @@
-package com.halas.utils;
+package com.halas.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
