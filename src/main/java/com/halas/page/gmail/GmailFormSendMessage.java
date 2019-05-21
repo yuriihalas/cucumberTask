@@ -31,12 +31,6 @@ public class GmailFormSendMessage extends CommonPage {
     @FindBy(css = "form[enctype='multipart/form-data']>div:nth-child(2)")
     private Button email;
 
-/*
-    public void clickOnEmail(){
-        fieldWhichEmailsSend.click();
-    }
-*/
-
     public void clickOnCC() {
         driverWait.until(ExpectedConditions.visibilityOf(openCCfield.getElement()));
         openCCfield.click();

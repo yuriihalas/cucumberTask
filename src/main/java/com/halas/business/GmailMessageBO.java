@@ -3,8 +3,11 @@ package com.halas.business;
 import com.halas.model.Message;
 import com.halas.page.gmail.GmailFormSendMessage;
 import com.halas.page.gmail.GmailHomePage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GmailMessageBO {
+    private static final Logger LOG = LogManager.getLogger(GmailMessageBO.class);
     private GmailFormSendMessage gmailFormSendMessage;
     private GmailHomePage gmailHomePage;
 
@@ -14,12 +17,13 @@ public class GmailMessageBO {
     }
 
     public void createDraftMessage(final Message message) {
+        LOG.info("create draft message..");
         gmailHomePage.clickOnWriteSomeoneButton();
         //якщо знайде що курсор є не на елементі email, а на якомусь іншому
         if (isMouseFocusOnNotEmailField()) {
+            LOG.info("Mouse isn't focus on email, click on email");
             gmailFormSendMessage.clickOnEmailField();
         }
-        //gmailFormSendMessage.clickOnEmail();
         gmailFormSendMessage.clickOnCC();
         gmailFormSendMessage.clickOnBCC();
         fillMessage(message);
@@ -27,6 +31,7 @@ public class GmailMessageBO {
     }
 
     private void fillMessage(final Message message) {
+        LOG.info("Fill message in gmail..");
         gmailFormSendMessage.fillEmailField(message.getTo());
         gmailFormSendMessage.fillCCField(message.getCc());
         gmailFormSendMessage.fillBCCField(message.getBcc());
@@ -39,6 +44,7 @@ public class GmailMessageBO {
     }
 
     public void goToDraftMessagesClickOnFirstOnTopMessage() {
+        LOG.info("Go to draft messages and click on first on top message.");
         gmailHomePage.clickOnDraftsMessages();
         gmailHomePage.clickOnFirstOnTopSavedMessage();
         if(isMouseFocusOnNotEmailField()) {
@@ -47,6 +53,7 @@ public class GmailMessageBO {
     }
 
     public Message getMessage() {
+        LOG.info("Get actual message from gmail..");
         String actualTo = gmailFormSendMessage.getTextFieldWhichEmailsSend();
         String actualCC = gmailFormSendMessage.getTextFromCcField();
         String actualBCC = gmailFormSendMessage.getTextFromBccField();
@@ -56,6 +63,7 @@ public class GmailMessageBO {
     }
 
     public void sendMessage() {
+        LOG.info("Send message..");
         gmailFormSendMessage.clickOnSendMessage();
         gmailFormSendMessage.waitUntilSendingMessageWillEnd();
     }

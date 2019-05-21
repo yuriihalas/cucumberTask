@@ -4,16 +4,19 @@ import com.halas.decorator.element.realisation.Button;
 import com.halas.decorator.element.realisation.Image;
 import com.halas.page.CommonPage;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.function.Function;
 
 public class GmailHomePage extends CommonPage {
     @FindBy(css = "header a[href$='mail.google.com/mail&service=mail'][aria-label*='Google:'][role='button']")
     private Image accountCircle;
     @FindBy(css = "[jscontroller='DUNnfe'] [role='button']")
     private Button writeSomeone;
-    @FindBy(css = "a[href$='#drafts'][target='_top']")
+    @FindBy(css = "[role='navigation'] a[href$='#drafts'][draggable]")
     private Button draftMessages;
     @FindBy(css = "div.AO div[role='main'] tbody>tr:first-child")
     private Button lastSavedMessage;
@@ -29,8 +32,13 @@ public class GmailHomePage extends CommonPage {
     }
 
     public void clickOnDraftsMessages() {
-        driverWait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(draftMessages.getElement()));
-        draftMessages.click();
+        driverWait.ignoring(StaleElementReferenceException.class).until(new Function<WebDriver, Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                draftMessages.click();
+                return true;
+            }
+        });
         driverWait.until(ExpectedConditions.attributeToBe(draftMessages.getElement(), "tabindex", "0"));
     }
 
