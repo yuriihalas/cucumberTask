@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.testng.annotations.*;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static com.halas.driver.WebDriverManager.getWebDriver;
@@ -33,12 +34,17 @@ public class GmailTest {
 
     @Test(dataProvider = "usersLoginPassword")
     void testSingInAndGoToSavedMessageAndCheckCorrectAndSendMess(String userLogin, String userPassword) {
+        String log = System.getProperty("username");
+        String pass = System.getProperty("password");
+        userLogin = Objects.isNull(log) ? userLogin : log;
+        userPassword = Objects.isNull(pass) ? userPassword : pass;
+
         GmailAuthorisationBO gmailAuthorisationBO = new GmailAuthorisationBO();
         GmailMessageBO gmailMessageBO = new GmailMessageBO();
         Message message = new Message(getWhoReceiveMessage(), getWhoReceiveCopyMessage(), getWhoReceiveHiddenCopyMessage(), getThemeMessage(), getMessage());
         gmailAuthorisationBO.authoriseUser(userLogin, userPassword);
         //assert to success login by userLogin
-        assertTrue(gmailAuthorisationBO.checkSuccessAuthorisation(userLogin));
+        assertTrue(gmailAuthorisationBO.isSuccessAuthorisation(userLogin));
         LOG.info("SUCCESS authorization.");
         gmailMessageBO.createDraftMessage(message);
         gmailMessageBO.goToDraftMessagesClickOnFirstOnTopMessage();

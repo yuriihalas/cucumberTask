@@ -22,7 +22,7 @@ public class GmailAuthorisationBO {
         authorizationPage.fillPasswordAreaAndClickNext(password);
     }
 
-    public boolean checkSuccessAuthorisation(final String userLogin) {
+    public boolean isSuccessAuthorisation(final String userLogin) {
         LOG.info("Check success authorization..");
         WebElement accountCircle = gmailHomePage.getAccountCircle();
         return accountCircle.getAttribute("aria-label").contains(userLogin);
